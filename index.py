@@ -63,6 +63,12 @@ class StemTokenizer:
 # Define a simple whitespace tokenizer
 def simple_tokenizer(s):
     return s.split()
+sentence=str(input("enter the sentence :"))
+def predict_new_sentence(vectorizer_test,sentence):
+    xNew = vectorizer_test.transform([sentence])
+    prediction = model.predict(xNew)
+    return prediction[0]
+
 
 # Initialize the CountVectorizer
 vectorizer = CountVectorizer()
@@ -80,6 +86,7 @@ model.fit(xTrain, y_train)
 # Print the training and test scores
 print("train score: ", model.score(xTrain, y_train))
 print("test score: ", model.score(xTest, y_test))
+print("Predicted label for the new sentence:", predict_new_sentence(vectorizer,sentence))
 
 # With stopwords
 vectorizer = CountVectorizer(stop_words='english')
@@ -89,6 +96,7 @@ model = MultinomialNB()
 model.fit(xTrain, y_train)
 print("train score with stopwords: ", model.score(xTrain, y_train))
 print("test score with stopwords: ", model.score(xTest, y_test))
+print("Predicted label for the new sentence without stopwords:", predict_new_sentence(vectorizer,sentence))
 
 # Using LemmaTokenizer
 vectorizer = CountVectorizer(tokenizer=LemmaTokenizer())
@@ -98,6 +106,7 @@ model = MultinomialNB()
 model.fit(xTrain, y_train)
 print("train score with LemmaTokenizer: ", model.score(xTrain, y_train))
 print("test score with LemmaTokenizer: ", model.score(xTest, y_test))
+print("Predicted label for the new sentence with LemmaTokeneizer:", predict_new_sentence(vectorizer,sentence))
 
 # Using StemTokenizer
 vectorizer = CountVectorizer(tokenizer=StemTokenizer())
@@ -107,6 +116,7 @@ model = MultinomialNB()
 model.fit(xTrain, y_train)
 print("train score with StemTokenizer: ", model.score(xTrain, y_train))
 print("test score with StemTokenizer: ", model.score(xTest, y_test))
+print("Predicted label for the new sentence with StemTokenizer:", predict_new_sentence(vectorizer,sentence))
 
 # Using simple tokenizer
 vectorizer = CountVectorizer(tokenizer=simple_tokenizer)
@@ -116,3 +126,4 @@ model = MultinomialNB()
 model.fit(xTrain, y_train)
 print("train score with simple tokenizer: ", model.score(xTrain, y_train))
 print("test score with simple tokenizer: ", model.score(xTest, y_test))
+print("Predicted label for the new sentence with simple tokenizer:", predict_new_sentence(vectorizer,sentence))
